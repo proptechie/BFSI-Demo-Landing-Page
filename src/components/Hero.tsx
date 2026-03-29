@@ -1,6 +1,16 @@
 "use client";
 
-import { PHONE_NUMBER, PHONE_NUMBER_TEL } from "@/lib/config";
+import { useState, useEffect } from "react";
+// Config import removed — phone fallback removed from hero
+
+function LiveCount({ base }: { base: number }) {
+  const [count, setCount] = useState(base);
+  useEffect(() => {
+    const interval = setInterval(() => setCount((c) => c + 1), 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
+  return <>{count.toLocaleString()}</>;
+}
 
 interface HeroProps {
   onGetStarted?: () => void;
@@ -50,7 +60,7 @@ export default function Hero({ onGetStarted }: HeroProps) {
               ))}
             </div>
             <span className="text-sm text-white font-medium">
-              847 people contacted today
+              <LiveCount base={847} /> people contacted today
             </span>
           </div>
         </div>
@@ -78,16 +88,6 @@ export default function Hero({ onGetStarted }: HeroProps) {
           </button>
         </div>
 
-        {/* Phone fallback */}
-        <p className="animate-fade-rise-delay-2 text-sm text-white/50 mt-3">
-          Or call{" "}
-          <a
-            href={`tel:${PHONE_NUMBER_TEL}`}
-            className="text-white/70 underline underline-offset-4 hover:text-white transition-colors"
-          >
-            {PHONE_NUMBER}
-          </a>
-        </p>
       </div>
     </section>
   );

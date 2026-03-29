@@ -17,6 +17,17 @@ const DEMO_COUNTS: Record<string, number> = {
   "lead-reactivation": 967,
 };
 
+const MODAL_INITIALS: Record<string, string[]> = {
+  "speed-to-lead": ["J", "M", "S"],
+  "nsf-recovery": ["T", "L", "D"],
+  "collections-outbound": ["R", "P", "K"],
+  "settlement-approval": ["B", "N", "C"],
+  "added-funds": ["A", "W", "H"],
+  "compliance-qa": ["E", "G", "F"],
+  "refinance": ["V", "Q", "Z"],
+  "lead-reactivation": ["I", "O", "U"],
+};
+
 /* ─── Processing step definitions per use case ─── */
 
 interface ProcessingStep {
@@ -366,7 +377,7 @@ export default function UseCaseModal({ useCase, onClose }: UseCaseModalProps) {
               {/* Social proof */}
               <div className="flex items-center gap-3 mt-4 py-2.5 px-4 bg-[var(--ct-blue-50)] rounded-xl border border-[var(--ct-blue-200)]">
                 <div className="flex -space-x-2">
-                  {["A", "K", "R"].map((l, i) => (
+                  {(MODAL_INITIALS[useCase.id] || ["A", "K", "R"]).map((l, i) => (
                     <div key={i} className="w-6 h-6 rounded-full bg-[var(--ct-blue-700)] border-2 border-white flex items-center justify-center text-white text-[9px] font-bold" style={{ opacity: 1 - i * 0.15 }}>{l}</div>
                   ))}
                 </div>

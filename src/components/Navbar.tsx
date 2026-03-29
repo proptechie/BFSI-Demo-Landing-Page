@@ -65,7 +65,7 @@ export default function Navbar() {
           {/* Call Us Now — glass button with blinking dot */}
           <a
             href={`tel:${PHONE_NUMBER_TEL}`}
-            className="inline-flex items-center gap-2 rounded-xl px-3 md:px-4 py-2 text-[13px] font-medium text-content-strong hover:bg-white/40 transition-colors"
+            className="inline-flex items-center gap-2 rounded-xl px-3 md:px-4 py-2 text-[13px] font-medium text-content-strong hover:bg-white/50 hover:scale-[1.03] active:scale-[0.97] transition-all"
             style={{
               background: "rgba(255, 255, 255, 0.3)",
               border: "1px solid rgba(0, 0, 0, 0.08)",

@@ -3,6 +3,19 @@
 import { useEffect, useState, useCallback } from "react";
 import { PHONE_NUMBER, PHONE_NUMBER_TEL } from "@/lib/config";
 
+/* ─── Live ticking counter ─── */
+
+function LiveCount({ base }: { base: number }) {
+  const [count, setCount] = useState(base);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCount((c) => c + 1);
+    }, 5 * 60 * 1000); // every 5 minutes
+    return () => clearInterval(interval);
+  }, []);
+  return <>{count.toLocaleString()}</>;
+}
+
 interface OptInModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -222,7 +235,7 @@ export default function OptInModal({ isOpen, onClose }: OptInModalProps) {
                     <div key={i} className="w-7 h-7 rounded-full bg-[var(--ct-blue-700)] border-2 border-white flex items-center justify-center text-white text-[10px] font-bold" style={{ opacity: 1 - i * 0.15 }}>{l}</div>
                   ))}
                 </div>
-                <p className="text-xs text-[var(--ct-neutral-600)]"><span className="font-semibold text-[var(--ct-neutral-900)]">847 people</span> got a callback today</p>
+                <p className="text-xs text-[var(--ct-neutral-600)]"><span className="font-semibold text-[var(--ct-neutral-900)]"><LiveCount base={847} /> people</span> got a callback today</p>
               </div>
 
               <form onSubmit={handleSubmit} className="mt-5">
@@ -232,9 +245,9 @@ export default function OptInModal({ isOpen, onClose }: OptInModalProps) {
                   <button
                     type="button"
                     onClick={() => setScenario("Debt Relief")}
-                    className={`border-2 rounded-xl p-4 text-center transition-all ${
+                    className={`border-2 rounded-xl p-4 text-center transition-all cursor-pointer hover:scale-[1.03] hover:shadow-md active:scale-[0.97] ${
                       scenario === "Debt Relief"
-                        ? "border-[var(--ct-blue-700)] bg-[var(--ct-blue-50)] ring-2 ring-[var(--ct-blue-700)]/20"
+                        ? "border-[var(--ct-blue-700)] bg-[var(--ct-blue-50)] ring-2 ring-[var(--ct-blue-700)]/20 shadow-md"
                         : "border-[var(--ct-neutral-200)] bg-white hover:border-[var(--ct-blue-300)]"
                     }`}
                   >
@@ -244,9 +257,9 @@ export default function OptInModal({ isOpen, onClose }: OptInModalProps) {
                   <button
                     type="button"
                     onClick={() => setScenario("Lending & Loans")}
-                    className={`border-2 rounded-xl p-4 text-center transition-all ${
+                    className={`border-2 rounded-xl p-4 text-center transition-all cursor-pointer hover:scale-[1.03] hover:shadow-md active:scale-[0.97] ${
                       scenario === "Lending & Loans"
-                        ? "border-[var(--ct-blue-700)] bg-[var(--ct-blue-50)] ring-2 ring-[var(--ct-blue-700)]/20"
+                        ? "border-[var(--ct-blue-700)] bg-[var(--ct-blue-50)] ring-2 ring-[var(--ct-blue-700)]/20 shadow-md"
                         : "border-[var(--ct-neutral-200)] bg-white hover:border-[var(--ct-blue-300)]"
                     }`}
                   >
