@@ -56,10 +56,18 @@ export default function UseCasesSection({ onGetStarted }: UseCasesSectionProps) 
 
   return (
     <section id="use-cases" className="py-16 px-4 md:py-24 md:px-6 bg-[var(--ct-neutral-100)]">
-      <p className="text-xs font-semibold tracking-[2px] text-[var(--ct-blue-700)] uppercase text-center">
-        USE CASES
-      </p>
-      <h2 className="text-2xl md:text-3xl font-bold text-[var(--ct-neutral-900)] text-center mt-2">
+      {/* Animated "Try our AI" pill */}
+      <div className="flex justify-center mb-6">
+        <div className="animate-electric inline-flex items-center gap-2 bg-[var(--ct-blue-700)] text-white rounded-full pl-3 pr-4 py-2">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-white" />
+          </span>
+          <span className="text-xs font-semibold tracking-wide uppercase">Try Our AI Now</span>
+        </div>
+      </div>
+
+      <h2 className="text-2xl md:text-3xl font-bold text-[var(--ct-neutral-900)] text-center">
         Engineer the Perfect Customer Experience
       </h2>
       <p className="text-[var(--ct-neutral-600)] text-center mt-3 max-w-lg mx-auto">

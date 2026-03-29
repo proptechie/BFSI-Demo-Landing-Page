@@ -285,6 +285,15 @@ body {
   animation-play-state: paused;
 }
 
+/* Electric border pulse */
+@keyframes electric-pulse {
+  0%, 100% { box-shadow: 0 0 5px var(--ct-blue-700), 0 0 10px rgba(0,114,206,0.3); }
+  50% { box-shadow: 0 0 12px var(--ct-blue-700), 0 0 24px rgba(0,114,206,0.4), 0 0 36px rgba(0,114,206,0.15); }
+}
+.animate-electric {
+  animation: electric-pulse 2s ease-in-out infinite;
+}
+
 /* Live indicator flash */
 @keyframes live-flash {
   0%, 100% { opacity: 1; transform: scale(1); }
