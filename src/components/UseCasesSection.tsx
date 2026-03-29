@@ -60,10 +60,10 @@ export default function UseCasesSection({ onGetStarted }: UseCasesSectionProps) 
         USE CASES
       </p>
       <h2 className="text-2xl md:text-3xl font-bold text-[var(--ct-neutral-900)] text-center mt-2">
-        See What Conduit AI Can Do
+        Engineer the Perfect Customer Experience
       </h2>
       <p className="text-[var(--ct-neutral-600)] text-center mt-3 max-w-lg mx-auto">
-        Click any use case below to experience it live on your phone.
+        See what Conduit AI can do. Click any use case to experience it live on your phone.
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-12 max-w-5xl mx-auto">

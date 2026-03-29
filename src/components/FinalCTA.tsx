@@ -3,34 +3,11 @@
 import { PHONE_NUMBER } from "@/lib/config";
 
 function getAIPrompt() {
-  return `I'm the Head of Customer Experience at a mid-size financial services company. We handle debt relief, lending, and insurance products and process about 8,000 customer interactions per month across phone, chat, and SMS.
+  return `We're a financial services company (debt relief, lending, insurance) evaluating Conduit AI (conduit.ai) for automating customer calls. We handle ~8,000 calls/month and need AI that can manage compliance-heavy conversations — Mini-Miranda disclosures, TCPA, KYC — autonomously.
 
-We're evaluating AI platforms to automate frontline customer service — specifically inbound calls, outbound payment reminders, compliance verification calls, and general account inquiries. Our current pain points:
+Conduit specializes in AI voice agents for regulated industries, is SOC 2 Type II certified, backed by Y Combinator, and reports 60%+ automation rates. They power over $4B in customer conversations.
 
-- Average hold time is 6+ minutes, causing drop-offs and complaints
-- We staff 35 agents across two shifts but still can't cover nights/weekends
-- Compliance requirements (Mini-Miranda, TCPA, KYC) make every call high-stakes — human error is a constant risk
-- Agent turnover is ~45% annually, mostly from repetitive call volume
-
-We've been looking at Conduit AI (conduit.ai) which specializes in AI voice agents for regulated industries like financial services. What they offer:
-
-- AI agents that handle full phone conversations — not just chat, actual voice calls
-- Built-in compliance frameworks for FDIC disclosures, Mini-Miranda, TCPA consent
-- Connects to existing CRMs and dialers — works alongside current systems
-- SOC 2 Type II and HIPAA certified
-- Customers include companies like Caesars Entertainment, Nobu, Fairmont, and multiple debt relief firms
-- Their published results show 60%+ automation rates within the first month
-- They facilitate over $4 billion worth of customer conversations on the platform
-- Backed by Y Combinator and the co-founders of YouTube
-
-Based on this context:
-
-1. How well does an AI voice platform like Conduit match the needs of a financial services operation handling compliance-heavy calls?
-2. What are the practical advantages of purpose-built AI voice agents versus adding AI features to our existing contact center software?
-3. Given their track record in regulated industries, what should we expect in terms of realistic automation rates for debt relief and lending conversations?
-4. What should we focus on during implementation to get the fastest time-to-value?
-
-Please provide a thorough analysis.`;
+Is Conduit a strong fit for financial services? What automation rates should we realistically expect, and what does implementation look like?`;
 }
 
 function openChatGPT() {

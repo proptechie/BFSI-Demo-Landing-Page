@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { demoCalls, type DemoCall, type TranscriptTurn } from "@/lib/data/demo-calls";
-import { PHONE_NUMBER, PHONE_NUMBER_TEL } from "@/lib/config";
 
 function fmtTime(s: number) {
   const m = Math.floor(s / 60);
@@ -70,7 +69,7 @@ function AudioPlayer({ src, duration }: { src: string; duration: string }) {
 
       <button
         onClick={toggle}
-        className="w-9 h-9 rounded-full bg-[var(--ct-blue-700)] flex items-center justify-center flex-shrink-0 text-white hover:bg-[var(--ct-blue-800)] transition-colors cursor-pointer shadow-md"
+        className="w-9 h-9 rounded-full bg-[var(--ct-blue-700)] flex items-center justify-center flex-shrink-0 text-white hover:bg-[var(--ct-blue-800)] active:scale-95 transition-all cursor-pointer shadow-md"
         aria-label={playing ? "Pause" : "Play"}
       >
         {playing ? (
@@ -87,12 +86,16 @@ function AudioPlayer({ src, duration }: { src: string; duration: string }) {
 
       <div
         ref={progressRef}
-        className="flex-1 h-1.5 bg-[var(--ct-blue-200)] rounded-full cursor-pointer relative"
+        className="flex-1 h-1.5 bg-[var(--ct-blue-200)] rounded-full cursor-pointer relative group"
         onClick={seek}
       >
         <div
           className="h-full bg-[var(--ct-blue-700)] rounded-full transition-[width] duration-100"
           style={{ width: `${pct}%` }}
+        />
+        <div
+          className="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-[var(--ct-blue-700)] rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
+          style={{ left: `calc(${pct}% - 6px)` }}
         />
       </div>
 
@@ -114,13 +117,13 @@ function TranscriptModal({
 }) {
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-[fadeIn_200ms_ease-out]"
       onClick={onClose}
     >
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
 
       <div
-        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[85vh] flex flex-col overflow-hidden"
+        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[85vh] flex flex-col overflow-hidden animate-[slideUp_250ms_ease-out]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -143,7 +146,7 @@ function TranscriptModal({
 
           <button
             onClick={onClose}
-            className="flex-shrink-0 w-8 h-8 rounded-full bg-[var(--ct-neutral-100)] hover:bg-[var(--ct-neutral-200)] flex items-center justify-center transition-colors"
+            className="flex-shrink-0 w-8 h-8 rounded-full bg-[var(--ct-neutral-100)] hover:bg-[var(--ct-neutral-200)] active:scale-90 flex items-center justify-center transition-all cursor-pointer"
             aria-label="Close transcript"
           >
             <svg className="w-4 h-4 text-content-subtle" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -162,19 +165,18 @@ function TranscriptModal({
           {call.transcript.map((turn: TranscriptTurn, i: number) => (
             <div
               key={i}
-              className={`flex gap-3 ${turn.speaker === "ai" ? "" : "flex-row-reverse"}`}
+              className={`flex gap-3 animate-[fadeIn_300ms_ease-out] ${turn.speaker === "ai" ? "" : "flex-row-reverse"}`}
+              style={{ animationDelay: `${Math.min(i * 30, 500)}ms`, animationFillMode: "backwards" }}
             >
               <div
-                className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold mt-0.5 ${
+                className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center mt-0.5 ${
                   turn.speaker === "ai"
-                    ? "bg-[var(--ct-blue-700)] text-white"
-                    : "bg-[var(--ct-neutral-200)] text-content-subtle"
+                    ? "bg-[var(--ct-blue-700)] text-white text-[10px] font-bold"
+                    : "bg-amber-100"
                 }`}
               >
                 {turn.speaker === "ai" ? "AI" : (
-                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0" />
-                  </svg>
+                  <span className="text-sm leading-none">{call.callerAvatar}</span>
                 )}
               </div>
 
@@ -205,17 +207,62 @@ function TranscriptModal({
   );
 }
 
+/* ─── Language Toggle (switch style) ─── */
+
+function LanguageSwitch({
+  value,
+  onChange,
+}: {
+  value: "en" | "es";
+  onChange: (lang: "en" | "es") => void;
+}) {
+  return (
+    <div className="flex items-center justify-center gap-3 mt-6">
+      <span className={`text-sm font-medium transition-colors ${value === "en" ? "text-content-strong" : "text-content-disabled"}`}>
+        English
+      </span>
+
+      <button
+        onClick={() => onChange(value === "en" ? "es" : "en")}
+        className="relative w-12 h-6 rounded-full bg-[var(--ct-neutral-200)] hover:bg-[var(--ct-neutral-300)] transition-colors cursor-pointer"
+        aria-label="Toggle language"
+      >
+        <div
+          className="absolute top-0.5 w-5 h-5 rounded-full bg-[var(--ct-blue-700)] shadow-md transition-all duration-200 ease-in-out"
+          style={{ left: value === "en" ? "2px" : "calc(100% - 22px)" }}
+        />
+      </button>
+
+      <span className={`text-sm font-medium transition-colors ${value === "es" ? "text-content-strong" : "text-content-disabled"}`}>
+        Espa&ntilde;ol
+      </span>
+    </div>
+  );
+}
+
 /* ─── Call Card ─── */
 
-function CallCard({ call, onViewTranscript }: { call: DemoCall; onViewTranscript: () => void }) {
+function CallCard({
+  call,
+  onViewTranscript,
+  index,
+}: {
+  call: DemoCall;
+  onViewTranscript: () => void;
+  index: number;
+}) {
   return (
-    <div className="bg-white rounded-2xl p-5 border border-border-subtle hover:border-[var(--ct-blue-300)] hover:shadow-3 transition-all flex flex-col">
-      {/* Title & description */}
-      <h3 className="font-semibold text-content-strong text-base leading-snug">
+    <div
+      className="group bg-white rounded-2xl p-5 border border-border-subtle hover:border-[var(--ct-blue-300)] hover:shadow-4 hover:-translate-y-0.5 transition-all duration-200 flex flex-col animate-[fadeIn_400ms_ease-out]"
+      style={{ animationDelay: `${index * 80}ms`, animationFillMode: "backwards" }}
+    >
+      {/* Title */}
+      <h3 className="font-semibold text-content-strong text-base leading-snug group-hover:text-[var(--ct-blue-800)] transition-colors">
         {call.title}
       </h3>
 
-      <p className="text-sm text-content-subtle mt-1.5 leading-relaxed line-clamp-3">
+      {/* One-line description */}
+      <p className="text-sm text-content-subtle mt-1.5 leading-relaxed">
         {call.description}
       </p>
 
@@ -255,7 +302,7 @@ function CallCard({ call, onViewTranscript }: { call: DemoCall; onViewTranscript
         ))}
       </div>
 
-      {/* Spacer to push controls to bottom */}
+      {/* Spacer */}
       <div className="flex-1" />
 
       {/* Audio player */}
@@ -266,7 +313,7 @@ function CallCard({ call, onViewTranscript }: { call: DemoCall; onViewTranscript
       {/* View Transcript button */}
       <button
         onClick={onViewTranscript}
-        className="mt-2.5 w-full h-10 rounded-xl border border-[var(--ct-blue-200)] bg-[var(--ct-blue-50)] hover:bg-[var(--ct-blue-100)] transition-colors flex items-center justify-center gap-2 cursor-pointer"
+        className="mt-2.5 w-full h-10 rounded-xl border border-[var(--ct-blue-200)] bg-[var(--ct-blue-50)] hover:bg-[var(--ct-blue-100)] active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
       >
         <svg className="w-4 h-4 text-[var(--ct-blue-700)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
@@ -281,6 +328,11 @@ function CallCard({ call, onViewTranscript }: { call: DemoCall; onViewTranscript
 
 export default function CallGallerySection() {
   const [activeTranscript, setActiveTranscript] = useState<DemoCall | null>(null);
+  const [lang, setLang] = useState<"en" | "es">("en");
+
+  const enCalls = demoCalls.filter((c) => c.language === "en");
+  const esCalls = demoCalls.filter((c) => c.language === "es");
+  const filteredCalls = lang === "en" ? enCalls : esCalls;
 
   return (
     <>
@@ -294,17 +346,22 @@ export default function CallGallerySection() {
         </h2>
 
         <p className="text-content-subtle text-center mt-3 max-w-2xl mx-auto leading-relaxed">
-          These are actual production calls between customers and Conduit Voice AI
-          in regulated financial services environments. No scripts. No actors.
-          Every call scored positive sentiment with a perfect faithfulness score.
+          Actual production calls between customers and Conduit Voice AI
+          in regulated financial services. No scripts. No actors.
           Sensitive details are obscured for privacy.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 max-w-6xl mx-auto">
-          {demoCalls.map((call) => (
+        <LanguageSwitch value={lang} onChange={setLang} />
+
+        <div
+          key={lang}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-8 max-w-6xl mx-auto"
+        >
+          {filteredCalls.map((call, i) => (
             <CallCard
               key={call.id}
               call={call}
+              index={i}
               onViewTranscript={() => setActiveTranscript(call)}
             />
           ))}

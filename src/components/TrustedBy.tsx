@@ -7,13 +7,13 @@ const STATS = [
 
 // height tuned per logo so they look visually balanced despite different aspect ratios
 const LOGOS = [
-  { name: "Nobu Hospitality", url: "/logos/nobu.png", h: "h-8" },
-  { name: "DebtBlue", url: "https://debtblue.com/wp-content/uploads/2022/09/DebtBlue-Vector.svg", h: "h-7" },
-  { name: "Golden Oak Lending", url: "/logos/golden-oak.png", h: "h-10" },
+  { name: "Nobu Hospitality", url: "/logos/nobu.png", h: "h-12" },
+  { name: "DebtBlue", url: "https://debtblue.com/wp-content/uploads/2022/09/DebtBlue-Vector.svg", h: "h-5" },
+  { name: "Golden Oak Lending", url: "/logos/golden-oak.png", h: "h-8" },
   { name: "Fairmont", url: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Fairmont_Hotels_and_Resorts_logo.svg/1280px-Fairmont_Hotels_and_Resorts_logo.svg.png", h: "h-6" },
   { name: "Level", url: "/logos/level.png", h: "h-7" },
   { name: "EF Education First", url: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/EF_Education_First_logo.svg/250px-EF_Education_First_logo.svg.png", h: "h-8" },
-  { name: "Local Bank", url: "/logos/local-bank.png", h: "h-9" },
+  { name: "Local Bank", url: "/logos/local-bank.png", h: "h-10" },
   { name: "Caesars", url: "/logos/caesars.png", h: "h-12" },
   { name: "Lighthouse", url: "https://www.lighthousefinancesolutions.com/wp-content/uploads/2025/09/Lighthouse-TM-1.png", h: "h-8" },
   { name: "River Relief", url: "https://riverrelief.com/wp-content/uploads/2024/12/rr-logo.png", h: "h-7" },
